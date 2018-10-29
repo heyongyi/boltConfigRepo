@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: bolt
+  cloud:
+    config:
+      uri: http://localhost:7010/
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+
