@@ -5,10 +5,10 @@ spring:
     active: dev
   cloud:
     config:
-		allowOverride: true
-		failFast: true
-		overrideNone: true #覆盖非系统属性　true不覆盖
-		overrideSystemProperties: true #覆盖系统属性 false不覆盖
+	  allowOverride: true
+	  failFast: true
+	  overrideNone: true
+	  overrideSystemProperties: true
 server:
   port: 9003 #应用端口号
 eureka:
