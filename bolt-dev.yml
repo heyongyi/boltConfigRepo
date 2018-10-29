@@ -1,9 +1,12 @@
 spring:
   application:
     name: bolt
+  profiles:
+    active: dev
   cloud:
     config:
-      uri: http://localhost:7010/
+      uri: http://localhost:7010
+      profile: dev
 eureka:
   client:
     serviceUrl:
