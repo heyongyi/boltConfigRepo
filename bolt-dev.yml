@@ -5,8 +5,12 @@ spring:
     active: dev
   cloud:
     config:
-      uri: http://localhost:7010
-      profile: dev
+		allowOverride: true
+		failFast: true
+		overrideNone: true #覆盖非系统属性　true不覆盖
+		overrideSystemProperties: false #覆盖系统属性 false不覆盖
+server:
+  port: 9003 #应用端口号
 eureka:
   client:
     serviceUrl:
