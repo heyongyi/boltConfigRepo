@@ -1,0 +1,547 @@
+logging:
+  level:
+    root: info
+  config: classpath:logback-spring.xml
+
+endpoints:
+    shutdown:
+        enabled: true
+
+server:
+  port: 9999
+
+#熔断的开关
+feign:
+  hystrix:
+    enabled: true
+
+#熔断触发的时间
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 4000
+
+#针对Feign服务的重试及超时设置
+#app:
+#  ribbin:
+#    ConnectTimeout: 500
+    #Ribbon读取超时时间
+#    ReadTimeout: 1000
+    #重试设置
+#    OKToRetryOnAllOperations: true
+    #失败几次则换服务实例
+#    MaxAutoRetries: 1
+    #更换服务实例的次数
+#    MaxAutoRetriesNextServer: 2
+
+
+spring:
+  profiles:
+    active: debug
+  datasource:
+    schema: classpath:sql/schema.sql
+    initialize: true
+    continue-on-error: true
+    name: bolt
+    username: my_db1_user
+    password: sumLoader#1990
+    url: jdbc:mysql://localhost:13306/bolt?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=true&createDatabaseIfNotExist=true&zeroDateTimeBehavior=convertToNull
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    sql-script-encoding: UTF-8
+    tomcat:
+         max-active: 20
+         max-idle: 20
+         max-wait: 60000
+         min-idle: 1
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+es:
+  clusterName: eyes
+  clientIp: 10.10.31.29
+  pingTimeout: 120
+  samplerInterval: 120
+
+escape:
+  esEscapeCharacter:
+    - (
+    - )
+    - \
+# Custom configuration
+bolt:
+  label:
+    dd0ae841-e3aa-4555-8071-7361e0b27aaa:
+      0383ddb4-0134-4fa6-bdcb-a15b031e7a4e: 公职人员|0
+      efff83f8-a744-4428-b797-a9dc6bbf6104: 国军|0
+      5266e919-217a-4d4c-9693-aef2e9b4a75a: 警察|0
+      e7648bbc-06e3-404f-9758-40353d73a7bc: 有案底|0
+      879e5267-d37e-4a1c-a5d4-687a732bf916: 有房产|0
+      4e7c8ba0-6aa3-4927-a607-cb68d349181a: 有车辆|0
+      49e7e7ac-90f7-4da3-9cef-011fdf3dc780: 多次出入境|0
+      8ada3e80-50c7-479d-89ed-87cbf8be6571: 多次来中国|0
+      1022de59-3865-466d-bfb0-91ff103c1c6e: 有FB|1
+      af54c1fc-16e9-4311-bc60-0aeec33710c0: 有Line|1
+      3f9d6483-e9d3-4496-b742-8a4066e8496d: 有LinkedIn|1
+      7c033ff9-fd10-4e89-a163-b85e2d4a6804: 有出入境记录|1
+    cc73c122-384d-4bff-bd46-53ba1494343a:
+      a9ec2790-febc-4b9d-92d4-e010ece01f26: 出入境|0
+      c6a5b3a5-595a-4374-a05b-1f222ba1717e: 多次出入境|0
+      eca121ca-fa4f-4e1b-a124-9d7c560d4e5d: 多次中国往来|0
+      a8af6a36-0372-421b-af6e-d62adec054e0: 有档案|0
+    64bee0c4-d00d-45f6-ae72-cbd8a46319ea:
+      5E383411-7C41-60E4-C57F-29A7CC081210: 有FB|1
+      62EF0366-0AED-5FD3-7E53-A403639B19D8: 有Line|1
+    ec7c7025-8e4b-44ba-b61e-bc15a5b90581:
+      63912ee4-6927-475c-ae18-df2636ccac0a: 有FB|1
+    98dbb807-6491-4b86-80f8-68027b65553d:
+      32332f23-81a5-4587-b54a-019e433d9a73: 马来西亚临时工作证|0
+      f53cfc79-3827-4ea5-b5ea-b9537544ab97: fb|1
+      267773f0-6f5f-4b54-aab5-2d20eeff88cc: Twitter|1
+      7f1ef086-5a40-492a-9526-5fb15bb309b1: 掌握汉语|0
+      43c11af1-3224-4bf1-8f0a-6c11f260c86b: 持有马来西亚电话|0
+      2a907f7e-4734-4b48-a456-263c15b96cbe: 多次入境马来西亚|0
+  cf:
+    ec7c7025-8e4b-44ba-b61e-bc15a5b90581:
+      source:
+        - eddc222c-39d2-4e01-8324-b613acf005f9,74aacdc6-4517-4ed8-867d-361fd92af398|姓名|TEXT
+        - 717ff8c7-cef2-4959-896a-10b3a5313e1a|性别|TEXT
+        - 6ef626e5-f6e0-48c3-a80f-973c523f1f0f|出生日期|DATE
+        - c0292e7d-3c4e-4921-8c2b-56777cbddcaf|SSN|TEXT
+        - 1ef178fa-6727-460c-8dc9-d7c0a3890d0c|电话|TEXT
+        - f7eb61de-cfd4-46c4-9919-fea91dd6f648|地址|TEXT
+      highlight:
+        - eddc222c-39d2-4e01-8324-b613acf005f9|姓名|TEXT
+        - 74aacdc6-4517-4ed8-867d-361fd92af398|别名|TEXT
+        - 717ff8c7-cef2-4959-896a-10b3a5313e1a|性别|TEXT
+        - 6ef626e5-f6e0-48c3-a80f-973c523f1f0f|出生日期|DATE
+        - c0292e7d-3c4e-4921-8c2b-56777cbddcaf|SSN|TEXT
+        - 1ef178fa-6727-460c-8dc9-d7c0a3890d0c|电话|TEXT
+        - f7eb61de-cfd4-46c4-9919-fea91dd6f648|地址|TEXT
+        - 150bdc2b-9582-46c7-9560-a9e7c9483e78|姓名后缀|TEXT
+        - bcd9d031-3bbc-4d82-bf11-731ddf80fbe1|邮编|TEXT
+        - 49d00bde-3007-4b56-8009-02cf0cccf886|邮箱|TEXT
+        - 19a94104-847c-4ff8-9451-90b3692f31bc|肤色|TEXT
+        - 02c72c3f-6e26-4c57-bcff-7591ad2fc282|种族|TEXT
+        - 1656647c-02db-4286-bb60-8083bf4ec959|语言|TEXT
+        - eda836a0-df34-4fa1-aa96-db933f9d27dd|婚姻状态|TEXT
+        - 47755e6e-70ec-487d-a66e-02a4af0483ef|家庭电话|TEXT
+        - f69866d6-d555-4ba3-9714-8e23c708e6d2|工作电话|TEXT
+        - 6163d822-4d84-424f-a843-7b8c17bca175|移动电话|TEXT
+        - 5efec609-9a65-495b-84a7-1707cf07a77c.17d4be4b-5168-4ed9-83e7-7af8a469c1f5|脸书ID|TEXT
+        - 5efec609-9a65-495b-84a7-1707cf07a77c.7904299e-418f-4452-bbe2-d2e5b7cebced|脸书账户名|TEXT
+        - 5efec609-9a65-495b-84a7-1707cf07a77c.c730f5cd-da08-4e2c-b6fa-f1b13fd4601d|脸书用户名|TEXT
+        - 5efec609-9a65-495b-84a7-1707cf07a77c.288fbea1-42f6-4861-9ec8-057af75889f3|脸书性别|TEXT
+        - 5efec609-9a65-495b-84a7-1707cf07a77c.1ca8b67e-b364-4cec-ba3e-7f9be23c6f22|脸书家乡|TEXT
+        - 5efec609-9a65-495b-84a7-1707cf07a77c.d710adc0-a113-4505-9253-01552733bf59|脸书现居城市|TEXT
+        - 5efec609-9a65-495b-84a7-1707cf07a77c.e3079646-5e5d-4c61-9f40-b08286ad86c5|脸书关联码址|TEXT
+      boostfields:
+        - eddc222c-39d2-4e01-8324-b613acf005f9|10.0
+        - f7eb61de-cfd4-46c4-9919-fea91dd6f648|5.0
+      location:
+        - geo.gis
+    64bee0c4-d00d-45f6-ae72-cbd8a46319ea:
+      source:
+        - 27D8FEDC-DD99-89CE-7744-19594571D92D,22DF373F-694C-CA9F-C5FB-BF0026875A69|姓名|TEXT
+        - F3761203-1822-1E6F-0EC5-8F04669B9F93|身份证|TEXT
+        - 930F4E5D-0F08-CA3E-6B96-7C1419147DC9|电话|TEXT
+        - A702C173-269B-E031-534E-0DD9ECC1C19F|地址|TEXT
+      highlight:
+        - 27D8FEDC-DD99-89CE-7744-19594571D92D|姓名|TEXT
+        - 22DF373F-694C-CA9F-C5FB-BF0026875A69|别名|TEXT
+        - A4DEC04D-99B2-E53E-C439-C5821BD96427|性别|TEXT
+        - F5E67041-1997-E83C-D9C5-577CA4745FDD|出生日期|DATE
+        - 30FB0888-20A5-959C-3903-2A4ECC42379D|英文名|TEXT
+        - 148437A2-8468-89ED-8537-485263B046E1|婚姻状态|TEXT
+        - F3761203-1822-1E6F-0EC5-8F04669B9F93|身份证|TEXT
+        - 930F4E5D-0F08-CA3E-6B96-7C1419147DC9|电话|TEXT
+        - 4EEFD4A7-18C4-F0DD-C2A4-1037A42694DF|邮箱|TEXT
+        - 37D3E4D0-2A10-5A24-33FC-888D638603C4|受教育程度|TEXT
+        - A702C173-269B-E031-534E-0DD9ECC1C19F|地址|TEXT
+        - 041B29C2-90E4-3B6F-1D32-3E6AEA24F1EB.5F2354A9-06E0-1AD7-3153-F87927868262|描述_E|TEXT
+        - 041B29C2-90E4-3B6F-1D32-3E6AEA24F1EB.21AE5492-4F1F-D2B7-ED07-74DF2B7370C8|描述|TEXT
+        - 8863AB18-C6B9-7411-C22C-407E386416F8.8D4D09FF-1506-5220-B443-A11731688E10|脸书ID|TEXT
+        - 8863AB18-C6B9-7411-C22C-407E386416F8.C46E103F-B2B4-40C4-A017-744375E14077|脸书账户名|TEXT
+        - 8863AB18-C6B9-7411-C22C-407E386416F8.F852B635-F744-48D8-A8E5-F7CA7F02DB00|所在城市|TEXT
+        - 8863AB18-C6B9-7411-C22C-407E386416F8.A6A4714C-47D2-4F6D-AF59-6D990ECAAEB6|性别|TEXT
+        - 8863AB18-C6B9-7411-C22C-407E386416F8.DF8A54D0-322A-4B10-BFC5-CF988610D2C5|家乡名称|TEXT
+        - 8863AB18-C6B9-7411-C22C-407E386416F8.2023209C-2180-69F7-2008-C251F199CF7D|objectid|TEXT
+        - 8863AB18-C6B9-7411-C22C-407E386416F8.48FA6A4C-46ED-8E69-BD4E-852CA363F334|脸书名称|TEXT
+        - 8863AB18-C6B9-7411-C22C-407E386416F8.75665318-6762-A1FB-4D54-2CA364A2D5BB|好友数量|TEXT
+        - 8863AB18-C6B9-7411-C22C-407E386416F8.6783F7AE-2F14-112A-7E60-DD2D492DA9B7|关联码值|TEXT
+        - 1B540B49-7F14-E9FB-E597-89F2431CABBD.68826529-1204-0D87-BCA3-A6F2FD8FDE68|连我id|TEXT
+        - 1B540B49-7F14-E9FB-E597-89F2431CABBD.B4A20E30-CEBD-56FE-E084-A3896F7C4B82|连我账户名|TEXT
+        - 1B540B49-7F14-E9FB-E597-89F2431CABBD.1AA07B04-9414-7FC6-122A-B781AB964185|账户备注|TEXT
+        - 1B540B49-7F14-E9FB-E597-89F2431CABBD.F7112ADB-20C1-E084-7373-A8E11906AAB3|关联码值|TEXT
+      boostfields:
+        - 27D8FEDC-DD99-89CE-7744-19594571D92D|10.0
+        - F3761203-1822-1E6F-0EC5-8F04669B9F93|10.0
+        - 930F4E5D-0F08-CA3E-6B96-7C1419147DC9|10.0
+        - 4EEFD4A7-18C4-F0DD-C2A4-1037A42694DF|10.0
+        - 8863AB18-C6B9-7411-C22C-407E386416F8.48FA6A4C-46ED-8E69-BD4E-852CA363F334|5.0
+        - 1B540B49-7F14-E9FB-E597-89F2431CABBD.B4A20E30-CEBD-56FE-E084-A3896F7C4B82|5.0
+        - 8863AB18-C6B9-7411-C22C-407E386416F8.8D4D09FF-1506-5220-B443-A11731688E10|2.0
+        - 1B540B49-7F14-E9FB-E597-89F2431CABBD.68826529-1204-0D87-BCA3-A6F2FD8FDE68|2.0
+        - A702C173-269B-E031-534E-0DD9ECC1C19F|2.0
+      location:
+        - geo.gis
+    469c0b63-f8cc-4bfb-8f3f-08ebed25e01a:
+      source:
+        - A0AA871B-BC05-4CAD-B772-135D5BAFA99A|机构名称|TEXT
+        - 5C49CA8A-658B-4B2E-942C-6C6F7301FAC6|机构ID|TEXT
+        - 37E7C315-FC90-4545-B034-7B8CE4377226|机构电话|TEXT
+        - 691D0C58-ADA3-4146-B097-910137BFE43D|机构地址|TEXT
+      highlight:
+        - A0AA871B-BC05-4CAD-B772-135D5BAFA99A|机构名称|TEXT
+        - 0D61B52C-191B-4156-81D2-12C7FA739C59|机构别名|TEXT
+        - 5C49CA8A-658B-4B2E-942C-6C6F7301FAC6|机构ID|TEXT
+        - 37E7C315-FC90-4545-B034-7B8CE4377226|机构电话|TEXT
+        - A0D8AC32-86D7-468B-B50A-82B005898C6F|机构邮箱|TEXT
+        - 691D0C58-ADA3-4146-B097-910137BFE43D|机构地址|TEXT
+      boostfields:
+        - A0AA871B-BC05-4CAD-B772-135D5BAFA99A|10.0
+        - 5C49CA8A-658B-4B2E-942C-6C6F7301FAC6|10.0
+        - 37E7C315-FC90-4545-B034-7B8CE4377226|10.0
+        - 691D0C58-ADA3-4146-B097-910137BFE43D|5.0
+      location:
+        - geo.gis
+    a22f265b-f324-4612-80b6-b6dd17a1d43a:
+      source:
+        - E0B929CD-4666-4EF9-BB3F-1F9AEA9D0153,BEBF3BA4-9D63-41FC-9670-B25461DC56E6|姓名|TEXT
+        - B2CA226C-FFC9-4FD7-BDC2-30FBB9B947EB|出生日期|DATE
+        - 21690B9B-CFA2-4E55-8CEA-8CCB6B8525F8|国籍三字码|TEXT
+        - 7CC84780-7541-4646-8C3C-DE8439565BEC|证件号|TEXT
+      highlight:
+        - BEBF3BA4-9D63-41FC-9670-B25461DC56E6|全名|TEXT
+        - E0B929CD-4666-4EF9-BB3F-1F9AEA9D0153|姓名|TEXT
+        - B3B8B9EE-2B60-48C4-9199-092CADCCC726|性别|TEXT
+        - 21690B9B-CFA2-4E55-8CEA-8CCB6B8525F8|国籍三字码|TEXT
+        - EB0D68C4-0BC0-43DA-8321-7A2C45C1F0D2|行程ID|TEXT
+        - 7CC84780-7541-4646-8C3C-DE8439565BEC|证件号|TEXT
+        - 4331F9AE-5997-4856-B245-B1B3E88F91A8|乘客ID|TEXT
+      boostfields:
+        - E0B929CD-4666-4EF9-BB3F-1F9AEA9D0153|10.0
+        - 7CC84780-7541-4646-8C3C-DE8439565BEC|10.0
+        - E0B929CD-4666-4EF9-BB3F-1F9AEA9D0153|10.0
+        - BEBF3BA4-9D63-41FC-9670-B25461DC56E6|5.0
+    b4f5cae9-b5d3-421b-9581-fe17856398aa:
+      source:
+        - 0CBDA827-6075-47A4-9914-ADC720754ACC|航班号|TEXT
+        - 1E2947C7-0CAC-4579-B0A5-23EE0552C8FC|status|TEXT
+        - BB71C18F-8234-4D76-A00A-0F8E7BB06208|出发城市|TEXT
+        - 79F9CF0A-F0B2-4D83-ACD7-33BE4FC3DD64|出发机场|TEXT
+        - 3F00E4AB-FE71-4061-A652-52F2243D8814|到达城市|TEXT
+        - F5E70099-236E-4F21-8C73-6A7F7223A88D|到达机场|TEXT
+      highlight:
+        - E94C278E-6A44-4703-8246-FB827FF1CCDD|FLIGHT_KEY|TEXT
+        - 0CBDA827-6075-47A4-9914-ADC720754ACC|航班号|TEXT
+        - 819731B2-C840-4CA5-89F6-AE35EC79C2C9|出发国家|TEXT
+        - 6C409761-61BE-48A4-849D-999BDC58E684|出发国家Eng|DATE
+        - BB71C18F-8234-4D76-A00A-0F8E7BB06208|出发城市|TEXT
+        - 573316F9-A58A-40B9-B378-C6043930BD5B|出发城市Eng|TEXT
+        - 79F9CF0A-F0B2-4D83-ACD7-33BE4FC3DD64|出发机场|TEXT
+        - 0FD4F21E-7E42-42A4-9C39-55A4B8257C2F|出发机场Eng|TEXT
+        - F0CC0003-AB18-427E-B1BF-9D73A1E93604|出发机场三字码|TEXT
+        - BCA0E0DB-E3D2-4020-AD80-E6571D7D7276|到达国家|TEXT
+        - E4B84A9D-11D4-427A-A206-4072BF4BB015|到达国家Eng|TEXT
+        - 3F00E4AB-FE71-4061-A652-52F2243D8814|到达城市|TEXT
+        - A6EB368B-1267-4347-9239-4019ADEF7718|到达城市Eng|TEXT
+        - F5E70099-236E-4F21-8C73-6A7F7223A88D|到达机场|TEXT
+        - 5153DA6D-B3C0-41DF-A552-F28DDDF5C442|到达机场Eng|TEXT
+        - EF505865-B526-412B-9208-FF3DF5BCDFE6|到达机场三字码|TEXT
+        - 824325F5-81D0-DDCF-902A-CA7E3E86B304.CC486B3E-F794-40ED-A424-307E027840EA|航班时间|TEXT
+        - 824325F5-81D0-DDCF-902A-CA7E3E86B304.F96FD3DC-B2C4-4D8D-B79D-20C08B4141D8|行程ID|TEXT
+        - 1E2947C7-0CAC-4579-B0A5-23EE0552C8FC|status|TEXT
+      boostfields:
+        - 0CBDA827-6075-47A4-9914-ADC720754ACC|10.0
+        - 79F9CF0A-F0B2-4D83-ACD7-33BE4FC3DD64|5.0
+        - F5E70099-236E-4F21-8C73-6A7F7223A88D|5.0
+        - F0CC0003-AB18-427E-B1BF-9D73A1E93604|5.0
+        - EF505865-B526-412B-9208-FF3DF5BCDFE6|5.0
+      location:
+        - geo.gis
+    dd0ae841-e3aa-4555-8071-7361e0b27aaa:
+      source:
+        - faadf181-af2c-4e69-a4dc-f88baa7c125a|姓名|TEXT
+        - a19f8942-af65-4a86-9cf3-16f2075bca4d|出生日期|DATE
+        - aa677a42-aa4e-42c1-ac21-b38c7ce50627|身份证号|TEXT
+        - 881d6e4b-89ca-4b8a-af53-fb9ce23e881b.2bef921c-4de9-470a-8ed4-483b5a50fa65|单位名称|TEXT
+        - 055dcefa-730e-4d12-ae35-918696c6a915|地址|TEXT
+      highlight:
+        - faadf181-af2c-4e69-a4dc-f88baa7c125a|姓名|TEXT
+        - c9c928e5-c623-493f-8372-657891be3251|性别|TEXT
+        - aa677a42-aa4e-42c1-ac21-b38c7ce50627|身份证号|TEXT
+        - 89f68dd2-bddd-476d-9d39-653762090613|死亡原因|TEXT
+        - 203d3017-eb82-4004-a1f5-2d173f1feb9a|手机号|TEXT
+        - 35e64966-74a2-4a6b-94ec-3e6e6ebee1ab|电话|TEXT
+        - 30bcaf5f-9f16-4318-ae8d-6d550631101c|邮箱|TEXT
+        - 055dcefa-730e-4d12-ae35-918696c6a915|地址|TEXT
+        - 820b5413-d44a-42db-97c9-6eb2f225faf9|学历|TEXT
+        - d31664e4-0193-4e5d-aa00-d92c61a90ce4|邮编|TEXT
+        - 881d6e4b-89ca-4b8a-af53-fb9ce23e881b.2bef921c-4de9-470a-8ed4-483b5a50fa65|单位名称|TEXT
+        - 881d6e4b-89ca-4b8a-af53-fb9ce23e881b.ce09ff7f-eac3-4c0a-87db-ef8d312ac98d|单位电话|TEXT
+        - 881d6e4b-89ca-4b8a-af53-fb9ce23e881b.196f6bec-8dc8-4e92-a09a-7642781ddcc1|单位地址|TEXT
+        - 881d6e4b-89ca-4b8a-af53-fb9ce23e881b.1a35a6ba-0274-49be-82c3-ff5e55cc488d|注册地址|TEXT
+        - 881d6e4b-89ca-4b8a-af53-fb9ce23e881b.b67b557a-f36d-408b-9396-f4687950d491|单位传真|TEXT
+        - 881d6e4b-89ca-4b8a-af53-fb9ce23e881b.b40deafc-5deb-4cc0-8975-a5316cb40978|单位邮编|TEXT
+        - 881d6e4b-89ca-4b8a-af53-fb9ce23e881b.66108148-a653-4644-b13f-081dbb3dc25d|上保人|TEXT
+        - 881d6e4b-89ca-4b8a-af53-fb9ce23e881b.2179a57c-8999-437e-b331-6ac6a365bccd|上保人ID|TEXT
+        - 881d6e4b-89ca-4b8a-af53-fb9ce23e881b.e8c3daea-bb10-4d07-8a51-b8a330d0612b|编制|TEXT
+        - 881d6e4b-89ca-4b8a-af53-fb9ce23e881b.84d9476d-2bc7-46ae-bfd1-86a9d5a86917|职位|TEXT
+        - 881d6e4b-89ca-4b8a-af53-fb9ce23e881b.b0049492-12b0-4677-a949-9b69e0c98197|级别|TEXT
+        - 881d6e4b-89ca-4b8a-af53-fb9ce23e881b.59db39ae-4fbc-4194-8d25-d503bfccf4f5|单位ID|TEXT
+        - ce3d7fda-0560-4ce2-be2e-f427eedfca70.0f3d2abb-1fd7-408b-af37-4345f59cf901|罪名|TEXT
+        - ce3d7fda-0560-4ce2-be2e-f427eedfca70.ceaf272f-8e44-4402-bafa-60be7dc9209a|罪犯地址|TEXT
+        - ce3d7fda-0560-4ce2-be2e-f427eedfca70.7b2b896a-1d80-4d4d-b7ae-1a2e6a7ff883|犯罪备注|TEXT
+        - dac4c5ad-9f7b-4d74-84a0-d31778637120.90a5c807-65c8-46c5-854d-d5c2a77c91cb|单位|TEXT
+        - dac4c5ad-9f7b-4d74-84a0-d31778637120.8a16d0f2-3ef1-4f7a-91cd-384b35ad9df5|分局|TEXT
+        - dac4c5ad-9f7b-4d74-84a0-d31778637120.4ab8d57c-5330-49b1-a6bf-b474c2076715|职务|TEXT
+        - dac4c5ad-9f7b-4d74-84a0-d31778637120.0bc28578-d0a3-4955-a4c7-c7b46e0376b1|警衔|TEXT
+        - dac4c5ad-9f7b-4d74-84a0-d31778637120.4e3cc692-0ea2-4df3-a6df-48b851d16a4f|薪资|TEXT
+        - dac4c5ad-9f7b-4d74-84a0-d31778637120.3e94bb57-06ca-4363-a0c4-41f019e19bd6|资历|TEXT
+        - dac4c5ad-9f7b-4d74-84a0-d31778637120.b83c6a8d-b00b-44da-9a84-d62618288397|历史资历|TEXT
+        - dac4c5ad-9f7b-4d74-84a0-d31778637120.92c182ee-18ff-4c88-a525-83d0a88cc17e|毕业院校|TEXT
+        - dac4c5ad-9f7b-4d74-84a0-d31778637120.1ccdc6bd-d3ab-464f-abe1-ac19cba195cd|文凭|TEXT
+        - 033e97eb-1780-4460-bd30-0d8b8d784d19.da30d982-a456-4d15-844d-805e64cda28e|学校名称|TEXT
+        - 033e97eb-1780-4460-bd30-0d8b8d784d19.637ca1c8-0e2b-4400-bffd-05ad4214828b|专业|TEXT
+        - c944d0aa-57ca-4172-955f-d6a772ffb6d2.865361ec-34b7-4191-9c78-d603eeb361f6|车辆品牌|TEXT
+        - c944d0aa-57ca-4172-955f-d6a772ffb6d2.061ad685-8136-43e6-a16c-8d47679cf02d|车牌号|TEXT
+        - c944d0aa-57ca-4172-955f-d6a772ffb6d2.e4fae7c9-4921-4446-83de-89c3fb3f951d|发动机号|TEXT
+        - c944d0aa-57ca-4172-955f-d6a772ffb6d2.018b6f6f-b5d8-4c6a-8231-d3248431b850|颜色|TEXT
+        - c944d0aa-57ca-4172-955f-d6a772ffb6d2.9e87eb4b-4ed3-4a57-8f83-bd1dcce89a26|车辆制造商|TEXT
+        - c944d0aa-57ca-4172-955f-d6a772ffb6d2.e25b6cc1-52ed-45b8-ae3c-eceda3742b7f|车辆类型|TEXT
+        - c944d0aa-57ca-4172-955f-d6a772ffb6d2.bc7f77fa-26e2-4ef0-a909-aa01b00eed27|车辆生产年份|TEXT
+        - c944d0aa-57ca-4172-955f-d6a772ffb6d2.a91e5581-6c2a-4229-8629-a1af6ddeb74a|车架号|TEXT
+        - 64f4e334-3d02-466f-8d06-53b1302938ed.057179d0-114e-47a1-8fa3-2c1e7ffb90bf|房屋编号|TEXT
+        - 64f4e334-3d02-466f-8d06-53b1302938ed.7eb07181-0f01-4dd8-8e35-ae72a0b05710|房屋地址|TEXT
+        - 64f4e334-3d02-466f-8d06-53b1302938ed.1abcb85b-7a4f-467e-ac2c-f5d5ee41cc13|户主|TEXT
+        - 64f4e334-3d02-466f-8d06-53b1302938ed.aa9af233-4d3d-4e73-9dd6-8c1941dd6812|是否户主|TEXT
+        - 64f4e334-3d02-466f-8d06-53b1302938ed.aadacba9-8672-4698-a3a3-8bac23917f4f|房产备注|TEXT
+        - 3789b9ee-708f-4eea-bfe0-ff6ce7d02b95.396add7d-34bf-4ff0-a950-f7dc184b6faf|FBID|TEXT
+        - 3789b9ee-708f-4eea-bfe0-ff6ce7d02b95.870413c8-a3b7-47cc-9132-1178f000601d|FB账户名|TEXT
+        - 3789b9ee-708f-4eea-bfe0-ff6ce7d02b95.f2becda2-f0c6-4663-9033-a8b5b1855c0f|FB好友数量|TEXT
+        - 3789b9ee-708f-4eea-bfe0-ff6ce7d02b95.ac0f6d11-8415-4b2d-9f7f-b2dc691d38d9|FB头像|TEXT
+        - 3789b9ee-708f-4eea-bfe0-ff6ce7d02b95.5661d96d-4ebf-4e81-a05e-0d64ff0c2958|关联码值|TEXT
+        - c6c7d60d-dbc2-4bdb-853e-8e031ce24a60.78a42a11-3d4f-46e7-81ef-8e8b5a9c2893|LineID|TEXT
+        - c6c7d60d-dbc2-4bdb-853e-8e031ce24a60.3336f594-6155-44ee-b25d-e4da5f92ad7b|Line账户名|TEXT
+        - c6c7d60d-dbc2-4bdb-853e-8e031ce24a60.e4a57c3e-450a-43dd-9a7c-f74ac1c18d56|Line关联码值|TEXT
+        - c6c7d60d-dbc2-4bdb-853e-8e031ce24a60.5d55d452-313a-4a91-a96c-45d7a42ee664|账户备注|TEXT
+        - a7ff0d68-e064-4367-aa79-74d2af9210e0.a0d284fa-f4fe-4f82-88e5-e54ea7542c4a|姓|TEXT
+        - a7ff0d68-e064-4367-aa79-74d2af9210e0.057a24de-8707-41a3-b44a-616ff28a2868|名|TEXT
+        - a7ff0d68-e064-4367-aa79-74d2af9210e0.5545547a-2b89-48b0-9d31-d5af62801f12|领英姓名|TEXT
+        - a7ff0d68-e064-4367-aa79-74d2af9210e0.a396974a-31a7-476b-b7d9-4d283bf06547|职业|TEXT
+        - a7ff0d68-e064-4367-aa79-74d2af9210e0.9ae45fac-4135-48d7-be21-ecfa02817c5a|关联邮箱|TEXT
+        - a7ff0d68-e064-4367-aa79-74d2af9210e0.38234736-9bae-4f6d-92ab-8e2db5ff62b1|工作地址|TEXT
+        - a7ff0d68-e064-4367-aa79-74d2af9210e0.fa050cc9-883e-49ff-8aef-301c39c6b96c|行业|TEXT
+        - a7ff0d68-e064-4367-aa79-74d2af9210e0.fa050cc9-883e-49ff-8aef-301c39c6b96c|领英备注|TEXT
+      boostfields:
+        - faadf181-af2c-4e69-a4dc-f88baa7c125a|10.0
+        - aa677a42-aa4e-42c1-ac21-b38c7ce50627|10.0
+        - 30bcaf5f-9f16-4318-ae8d-6d550631101c|10.0
+        - 881d6e4b-89ca-4b8a-af53-fb9ce23e881b.2bef921c-4de9-470a-8ed4-483b5a50fa65|5.0
+        - 055dcefa-730e-4d12-ae35-918696c6a915|2.0
+        - 64f4e334-3d02-466f-8d06-53b1302938ed.7eb07181-0f01-4dd8-8e35-ae72a0b05710|2.0
+      location:
+        - geo.gis
+    ee224b38-e2da-478d-877b-d64f92c2789a:
+      source:
+        - 8699f198-748b-481c-b9e7-1a54486525ce|机构名称|TEXT
+        - f8470b77-0e7f-4d2d-8d27-aa28e591cd7e|机构ID|TEXT
+        - 83bf5333-0c33-473a-b919-b39b337c13b4|机构电话|TEXT
+        - 881c5548-76f3-4ece-81dc-fdbb2ebcd3c1|上保人姓名|TEXT
+        - 9abaa2c0-e97c-45b9-8caa-031c93f08539|机构地址|TEXT
+      highlight:
+        - 8699f198-748b-481c-b9e7-1a54486525ce|机构名称|TEXT
+        - f8470b77-0e7f-4d2d-8d27-aa28e591cd7e|机构ID|TEXT
+        - 83bf5333-0c33-473a-b919-b39b337c13b4|机构电话|TEXT
+        - ac327811-0530-4519-91a6-a9d6435e675e|机构传真|TEXT
+        - 28b98347-97f0-4302-98ac-95171a778161|机构邮编|TEXT
+        - 9abaa2c0-e97c-45b9-8caa-031c93f08539|机构地址|TEXT
+        - 0fd01875-410e-4f24-aea7-f71d3bb4f511|注册地址|TEXT
+        - df95c2a0-d43d-4391-8524-ccc3e7bfbc19|上级机构|TEXT
+        - 17b76805-7ae8-47cd-9634-b5fe8644354b|上级机构ID|TEXT
+        - 881c5548-76f3-4ece-81dc-fdbb2ebcd3c1|上保人姓名|TEXT
+        - b472abd4-0fa8-48a4-bc8f-8bcf6d78752e|上保人ID|TEXT
+      boostfields:
+        - 8699f198-748b-481c-b9e7-1a54486525ce|10.0
+        - f8470b77-0e7f-4d2d-8d27-aa28e591cd7e|10.0
+        - df95c2a0-d43d-4391-8524-ccc3e7bfbc19|5.0
+        - 17b76805-7ae8-47cd-9634-b5fe8644354b|5.0
+        - 9abaa2c0-e97c-45b9-8caa-031c93f08539|5.0
+        - 0fd01875-410e-4f24-aea7-f71d3bb4f511|5.0
+        - 881c5548-76f3-4ece-81dc-fdbb2ebcd3c1|2.0
+        - b472abd4-0fa8-48a4-bc8f-8bcf6d78752e|2.0
+    cc73c122-384d-4bff-bd46-53ba1494343a:
+      source:
+        - d126556e-ddfe-41c2-8403-b8d7f43aa36f,173ab5e4-a27d-43ec-8311-16b7e3a0c7bf|全名|TEXT
+        - 0b3f48d0-2735-4b1b-8197-0322d82b5c80,2ddc84e9-401b-4049-b4a1-64a49942b224|性别|TEXT
+        - f3e296e9-0197-46a7-850c-6a752c2fc757|出生日期|DATE
+        - c96479bf-b41f-4f53-9b7c-c3406f031cea|国籍|TEXT
+        - ec03e553-ec56-4771-a52a-7ab3ee5499e9.f969fe24-337a-4303-81a1-aad710cde962|证件号|TEXT
+      highlight:
+        - 173ab5e4-a27d-43ec-8311-16b7e3a0c7bf|全名|TEXT
+        - d126556e-ddfe-41c2-8403-b8d7f43aa36f|姓名|TEXT
+        - a244ae71-65b1-42c8-91de-1e792d497c9e|名|TEXT
+        - 3ac612c4-8934-46a4-8093-5e5016fc91d4|姓|TEXT
+        - 4416d2e3-b27b-48d7-8513-e38085fc1483|中间名|TEXT
+        - 3def0629-bb89-419d-b3ab-1f6b9897df9f|身份证|TEXT
+        - 0b3f48d0-2735-4b1b-8197-0322d82b5c80|性别|TEXT
+        - 2ddc84e9-401b-4049-b4a1-64a49942b224|性别_eng|TEXT
+        - c96479bf-b41f-4f53-9b7c-c3406f031cea|国籍|TEXT
+        - 2108f169-a2a4-4b7d-8802-b124cb13e913|居住地|TEXT
+        - ec03e553-ec56-4771-a52a-7ab3ee5499e9.f969fe24-337a-4303-81a1-aad710cde962|证件号|TEXT
+        - ec03e553-ec56-4771-a52a-7ab3ee5499e9.55d7cc94-e745-4ea7-9f38-3d95fdb5efad|签发地|TEXT
+      boostfield:
+        - 173ab5e4-a27d-43ec-8311-16b7e3a0c7bf|10.0
+        - d126556e-ddfe-41c2-8403-b8d7f43aa36f|10.0
+        - 3def0629-bb89-419d-b3ab-1f6b9897df9f|10.0
+        - ec03e553-ec56-4771-a52a-7ab3ee5499e9.f969fe24-337a-4303-81a1-aad710cde962|10.0
+        - a244ae71-65b1-42c8-91de-1e792d497c9e|5.0
+        - 3ac612c4-8934-46a4-8093-5e5016fc91d4|5.0
+        - 4416d2e3-b27b-48d7-8513-e38085fc1483|5.0
+    aad01714-f01b-4e31-97fd-f78731f7fbda:
+      source:
+        - 488402f8-9169-4ab5-8896-527fc8c350e7|航班号|TEXT
+        - a9683608-956a-44d0-9d25-64919d75aae7|起落状态|INT
+        - d89d174a-84ca-44fa-b258-72d397e4d4d1|出发城市|TEXT
+        - abe59a9c-11ea-4d32-9c4b-252ac9bade52|出发机场|TEXT
+        - 795bd80f-071d-4499-aa30-8316d48a5333|到达城市|TEXT
+        - 17bc9f24-a882-4a3d-944f-371e755d9f66|到达机场|TEXT
+      highlight:
+        - 488402f8-9169-4ab5-8896-527fc8c350e7|航班号|TEXT
+        - d89d174a-84ca-44fa-b258-72d397e4d4d1|出发城市|TEXT
+        - 7359846c-4420-456f-ad0b-0d82a5c7b381|出发城市_Eng|TEXT
+        - abe59a9c-11ea-4d32-9c4b-252ac9bade52|出发机场|TEXT
+        - f3511ae4-ca28-4226-8695-b3a1bca66b3e|出发机场_Eng|TEXT
+        - 6775ec12-3d32-4a0d-8e7f-ebdbaf9d7681|出发机场三字码|TEXT
+        - ca896eff-6f57-4e0e-9221-2d465ebe50a7|出发国家|TEXT
+        - 70da2c06-a859-422d-a541-f4673b3d642b|出发国家_Eng|TEXT
+        - 795bd80f-071d-4499-aa30-8316d48a5333|到达城市|TEXT
+        - 7ea4368a-c9cf-4fbb-a767-06f839c221db|到达城市_Eng|TEXT
+        - 17bc9f24-a882-4a3d-944f-371e755d9f66|到达机场|TEXT
+        - 992e812e-01b6-4a3e-aa3b-054811fa2f9e|到达机场_Eng|TEXT
+        - be3479d5-f464-42c4-bb78-797c44742d62|到达机场三字码|TEXT
+        - 703e88db-b1e6-4337-8edd-fe6ab08bcf7d|到达国家|TEXT
+        - 3c333651-ffd0-4009-acdb-053adf273080|到达国家_Eng|TEXT
+        - a9683608-956a-44d0-9d25-64919d75aae7|起落状态|INT
+      boostfield:
+        - 488402f8-9169-4ab5-8896-527fc8c350e7|10.0
+        - 6775ec12-3d32-4a0d-8e7f-ebdbaf9d7681|5.0
+        - be3479d5-f464-42c4-bb78-797c44742d62|5.0
+        - abe59a9c-11ea-4d32-9c4b-252ac9bade52|5.0
+        - 17bc9f24-a882-4a3d-944f-371e755d9f66|5.0
+      location:
+        - 03e88175-a877-4368-a16e-97e0c434dbdf
+        - 3fb86a39-ffed-44a0-9083-8d63307733c6
+    65f1dc72-c1a5-4eea-bb99-c8ae2464b3b2:
+      source:
+        - 7702d9a4-7248-48a7-81d9-989f87d14e41|userName|TEXT
+        - 61dcd379-53d6-425b-8902-3de107fe99d4|userId|TEXT
+        - 9b171d21-5b40-46eb-8970-4b3aa14d9bdd|phone|TEXT
+        - 235d18c5-ec7c-4ff9-b59a-ede096b4a34f|email|TEXT
+        - 64d6800b-c875-4958-ad5f-ddd3a1ce2417|firstName|TEXT
+        - b8bfee5a-0be3-4b05-9472-fe930a0ec2ff|lastName|TEXT
+        - efa35df7-6358-40f5-b6e6-b0f7d5aeaa49|crackable|TEXT
+        - ac2a6122-cb44-4f75-a989-1e7563a9273a|fbExist|TEXT
+        - 5451dff5-2282-4aeb-b779-0eb4960e3189|mugshot|TEXT
+      fields:
+        - 7702d9a4-7248-48a7-81d9-989f87d14e41|10.0
+        - 64d6800b-c875-4958-ad5f-ddd3a1ce2417|2.0
+        - b8bfee5a-0be3-4b05-9472-fe930a0ec2ff|2.0
+        - 61dcd379-53d6-425b-8902-3de107fe99d4|2.0
+        - 9b171d21-5b40-46eb-8970-4b3aa14d9bdd|1.0
+        - 235d18c5-ec7c-4ff9-b59a-ede096b4a34f|1.0
+      highlight:
+        - 7702d9a4-7248-48a7-81d9-989f87d14e41|userName
+        - 61dcd379-53d6-425b-8902-3de107fe99d4|userId
+        - 9b171d21-5b40-46eb-8970-4b3aa14d9bdd|phone
+        - 235d18c5-ec7c-4ff9-b59a-ede096b4a34f|email
+        - 64d6800b-c875-4958-ad5f-ddd3a1ce2417|firstName
+        - b8bfee5a-0be3-4b05-9472-fe930a0ec2ff|lastName
+      location:
+        - b50e8b88-370f-46f6-97c6-57096a59ab03
+    199e5dcf-e113-4c06-b611-2a06aa221ca1:
+      source:
+        - 428201c6-c9c0-493d-9b69-6a4a0b53849b|messageId|TEXT
+        - ad833216-9ede-45ae-b8a2-c9224a1e55b2|sendFrom|TEXT
+        - 7f58cd6f-2feb-4acc-853d-58b723d9411c|sendUserName|TEXT
+        - 2e259d0d-157a-40e5-8afb-cd203a23490b|sendName|TEXT
+        - c149e96f-357f-4618-80d4-ceb941aaa14e|receiveTo|TEXT
+        - 9a6d706f-c095-4a85-81aa-a6eccdfe822f|receiveUserName|TEXT
+        - 1f56f57f-3f2f-4ff1-a545-655201717c8a|receiveName|TEXT
+        - 70b42b19-26c6-4d42-8c97-1b9d28615948|body|TEXT
+        - 11e74e36-6417-48d8-a0db-cdd3f27dd46c|postedTime|DATE
+        - 5451dff5-2282-4aeb-b779-0eb4960e3189|fileName|TEXT
+      fields:
+        - 70b42b19-26c6-4d42-8c97-1b9d28615948|10.0
+      highlight:
+        - 70b42b19-26c6-4d42-8c97-1b9d28615948|body
+      location:
+        - b50e8b88-370f-46f6-97c6-57096a59ab03
+    1d06f64a-258a-4158-a250-dc44fcf92262:
+      source:
+        - 428201c6-c9c0-493d-9b69-6a4a0b53849b|messageId|TEXT
+        - ad833216-9ede-45ae-b8a2-c9224a1e55b2|sendFrom|TEXT
+        - 7f58cd6f-2feb-4acc-853d-58b723d9411c|sendUserName|TEXT
+        - 2e259d0d-157a-40e5-8afb-cd203a23490b|sendName|TEXT
+        - c149e96f-357f-4618-80d4-ceb941aaa14e|receiveTo|TEXT
+        - 9a6d706f-c095-4a85-81aa-a6eccdfe822f|receiveUserName|TEXT
+        - 1f56f57f-3f2f-4ff1-a545-655201717c8a|receiveName|TEXT
+        - 11e74e36-6417-48d8-a0db-cdd3f27dd46c|postedTime|DATE
+        - 5451dff5-2282-4aeb-b779-0eb4960e3189|fileName|TEXT
+        - f2bdaf56-73f3-456f-99b2-8c891aafe15c|clientAddress|TEXT
+        - a168442b-4a78-4953-a4ae-d8c56fc53e58|ipCountry|TEXT
+        - c54040c6-f404-4369-ac58-4fb26d8998ec|ipCountryEnglish|TEXT
+        - 8dd5b0db-73fb-42b5-8fca-1be7e72c56c8|gpsDetail|TEXT
+        - ee86448e-5d98-4870-94af-515451391ae9|systemName|TEXT
+        - 383bb7f9-fa49-4c55-906c-f2dead2edb2e|model|TEXT
+        - b50e8b88-370f-46f6-97c6-57096a59ab03|geoPoint|TEXT
+      fields:
+        - 62f39b92-016b-4c05-8e65-708302829e2b|10.0
+      location:
+        - b50e8b88-370f-46f6-97c6-57096a59ab03
+    98dbb807-6491-4b86-80f8-68027b65553d:
+      source:
+        - de1c123a-99f8-44bf-9905-a37f595587ef,486d25af-f840-4d75-890b-34d6f69f30d0|姓名|TEXT
+        - fd4375c2-8aa9-4e4e-b8ed-fcfa8e5344c2|性别|TEXT
+        - a20c98d3-7a1b-44d1-9bee-b64d814a69e3|出生日期|DATE
+        - 6f391922-a392-4d03-b77b-fde295fbbdd8|国籍|TEXT
+        - efd2447f-ae1f-4107-a216-24c57bfc503d|国籍代码|TEXT
+        - a032e5c3-68e9-437c-9cdd-c23b8bcec05b|邮箱|TEXT
+      highlight:
+        - de1c123a-99f8-44bf-9905-a37f595587ef|中文姓名|TEXT
+        - 486d25af-f840-4d75-890b-34d6f69f30d0|姓名|TEXT
+        - a20c98d3-7a1b-44d1-9bee-b64d814a69e3|出生日期|DATE
+        - fd4375c2-8aa9-4e4e-b8ed-fcfa8e5344c2|性别|TEXT
+        - 6f391922-a392-4d03-b77b-fde295fbbdd8|国籍|TEXT
+        - a032e5c3-68e9-437c-9cdd-c23b8bcec05b|邮箱|TEXT
+        - b13e70bb-d214-4158-bc28-183926f82f8b|别名|TEXT
+        - 91c63c8f-79e8-4183-a8e9-336ea851a004|身份证号码|TEXT
+        - e2a60f2f-bb02-403f-a4e0-2ceeb2be67e6.68809931-d411-488b-a112-0ae80fd7d6bb|护照号码|TEXT
+        - b1638b98-c914-4b12-b9e7-1bb8c9e3765e|曾用身份证|TEXT
+        - 4b6fe62e-6892-4578-9d77-793520886759|电话|TEXT
+        - c34fbf7d-bc69-4d20-91be-37b51166a532|地址|TEXT
+        - 8162c651-d610-4901-b01e-a1b8b79cfd38|出生证明编号|TEXT
+        - 7f900bad-bc47-45d9-9a38-449c87d99a65.f9c95157-1295-4096-b64f-8cb800c6ca17|FBID|TEXT
+        - 7f900bad-bc47-45d9-9a38-449c87d99a65.a25607b3-5738-49e5-a265-dd8521e1b6d9|FB用户名|TEXT
+        - 2d4e59bc-35b6-4629-b8d2-8780cf84bd0a.8faef8fa-0127-4c8f-aeda-2e94fc72d482|TwitterId|TEXT
+        - 2d4e59bc-35b6-4629-b8d2-8780cf84bd0a.35370476-008b-4d55-b0cb-d278b7b40786|Twitter用户名|TEXT
+      fields:
+        - de1c123a-99f8-44bf-9905-a37f595587ef|1.0
+        - 486d25af-f840-4d75-890b-34d6f69f30d0|10.0
+        - b13e70bb-d214-4158-bc28-183926f82f8b|1.0
+        - 91c63c8f-79e8-4183-a8e9-336ea851a004|5.0
+        - e2a60f2f-bb02-403f-a4e0-2ceeb2be67e6.68809931-d411-488b-a112-0ae80fd7d6bb|5.0
+        - b1638b98-c914-4b12-b9e7-1bb8c9e3765e|1.0
+        - 4b6fe62e-6892-4578-9d77-793520886759|5.0
+        - a032e5c3-68e9-437c-9cdd-c23b8bcec05b|10.0
+        - c34fbf7d-bc69-4d20-91be-37b51166a532|5.0
+        - 8162c651-d610-4901-b01e-a1b8b79cfd38|1.0
+        - 7f900bad-bc47-45d9-9a38-449c87d99a65.f9c95157-1295-4096-b64f-8cb800c6ca17|10.0
+        - 7f900bad-bc47-45d9-9a38-449c87d99a65.a25607b3-5738-49e5-a265-dd8521e1b6d9|5.0
+        - 2d4e59bc-35b6-4629-b8d2-8780cf84bd0a.8faef8fa-0127-4c8f-aeda-2e94fc72d482|10.0
+        - 2d4e59bc-35b6-4629-b8d2-8780cf84bd0a.35370476-008b-4d55-b0cb-d278b7b40786|5.0
