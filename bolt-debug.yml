@@ -48,7 +48,7 @@ spring:
     name: bolt
     username: my_db1_user
     password: sumLoader#1990
-    url: jdbc:mysql://localhost:13306/bolt?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=true&createDatabaseIfNotExist=true&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://39.106.128.112:13306/bolt?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=true&createDatabaseIfNotExist=true&zeroDateTimeBehavior=convertToNull
     driver-class-name: com.mysql.cj.jdbc.Driver
     sql-script-encoding: UTF-8
     tomcat:
