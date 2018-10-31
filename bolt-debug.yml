@@ -62,8 +62,8 @@ mybatis:
     map-underscore-to-camel-case: true
 
 es:
-  clusterName: eyes
-  clientIp: 10.10.31.29
+  clusterName: elasticsearch
+  clientIp: 39.106.128.112
   pingTimeout: 120
   samplerInterval: 120
 
